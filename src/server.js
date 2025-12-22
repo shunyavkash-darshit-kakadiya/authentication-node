@@ -1,5 +1,6 @@
 import express from "express";
 import { PORT } from './configs/environment.config.js';
+import { appDb } from './configs/dbConnection.config.js';
 
 const app = express();
 const Port = PORT || 1101;
