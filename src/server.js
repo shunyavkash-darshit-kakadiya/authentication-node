@@ -1,10 +1,12 @@
 import express from "express";
+import cors from "cors";
 import { PORT } from "./configs/environment.config.js";
 import { appDb } from "./configs/dbConnection.config.js";
 import appRouter from "./app/app.route.js";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 //routes define
 app.use(appRouter);
