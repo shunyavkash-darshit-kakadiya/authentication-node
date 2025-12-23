@@ -6,6 +6,7 @@ const authSchema = Schema(
     fullName: { type: String },
     email: { type: String },
     password: { type: String },
+    googleId: { type: String },
   },
   {
     timestamps: true,
