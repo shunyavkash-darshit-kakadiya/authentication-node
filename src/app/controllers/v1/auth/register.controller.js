@@ -18,10 +18,10 @@ const registerController = async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ message: "User registered successfully", success: true });
   } catch (error) {
     console.error("Error in registerController:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
 
