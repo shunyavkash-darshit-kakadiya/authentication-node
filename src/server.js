@@ -1,9 +1,13 @@
 import express from "express";
 import { PORT } from "./configs/environment.config.js";
 import { appDb } from "./configs/dbConnection.config.js";
+import appRouter from "./app/app.route.js";
 
 const app = express();
-const Port = PORT || 1101;
+app.use(express.json());
+
+//routes define
+app.use(appRouter);
 
 //404 Route Handler
 app.use((req, res) => {
@@ -11,6 +15,6 @@ app.use((req, res) => {
 });
 
 //start the server
-app.listen(Port, () => {
-  console.log(`Server is running on port ${Port}`);
+app.listen(PORT || 1101, () => {
+  console.log(`Server is running on port ${PORT || 1101}`);
 });
