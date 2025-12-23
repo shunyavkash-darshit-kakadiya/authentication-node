@@ -1,11 +1,10 @@
-import mongoose from 'mongoose';
-import { APP_DB_URI } from '../configs/environment.config.js';
+import mongoose from "mongoose";
+import { APP_DB_URI } from "../configs/environment.config.js";
 
-// App Data DB
 const appDb = mongoose.createConnection(APP_DB_URI);
 
-appDb.on('connected', () => {
-    console.log('MongoDB connected successfully');
+appDb.on("connected", () => {
+  console.log("MongoDB connected successfully");
 });
 
 export { appDb };
