@@ -2,6 +2,7 @@ import Auth from "../../../../models/auth.model.js";
 import { comparePwd } from "../../../../utils/password.util.js";
 import { generateToken } from "../../../../utils/token.util.js";
 import { APP_JWT_SECRET } from "../../../../configs/environment.config.js";
+import { setCookie } from "../../../../utils/setCookie.util.js";
 
 const loginController = async (req, res) => {
   try {
@@ -24,6 +25,9 @@ const loginController = async (req, res) => {
       },
       APP_JWT_SECRET
     );
+
+    //set cookie
+    setCookie(res, "authToken", token);
 
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
