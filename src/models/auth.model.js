@@ -11,6 +11,10 @@ const authSchema = Schema(
       type: String,
       select: false,
     },
+    twoFactorEnabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
