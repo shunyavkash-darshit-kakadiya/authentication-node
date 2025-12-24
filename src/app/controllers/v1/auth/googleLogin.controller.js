@@ -20,7 +20,8 @@ const googleLoginController = async (req, res) => {
     //generate token
     const token = generateToken(
       {
-        id: user._id,
+        _id: user._id,
+        email: user.email,
       },
       APP_JWT_SECRET
     );

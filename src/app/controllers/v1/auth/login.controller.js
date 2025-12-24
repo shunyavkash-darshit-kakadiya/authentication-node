@@ -21,7 +21,8 @@ const loginController = async (req, res) => {
     //generate token
     const token = generateToken(
       {
-        id: user._id,
+        _id: user._id,
+        email: user.email,
       },
       APP_JWT_SECRET
     );
@@ -32,7 +33,7 @@ const loginController = async (req, res) => {
     res.status(200).json({ message: "Login successful", success: true });
   } catch (error) {
     console.error("Error in loginController:", error);
-    res.status(500).json({ message: "Internal Server Error" , success: false });
+    res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
 

@@ -7,6 +7,10 @@ const authSchema = Schema(
     email: { type: String, default: null },
     password: { type: String, default: null },
     googleId: { type: String, default: null },
+    twoFactorSecret: {
+      type: String,
+      select: false,
+    },
   },
   {
     timestamps: true,
