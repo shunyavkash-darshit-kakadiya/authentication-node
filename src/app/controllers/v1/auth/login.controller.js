@@ -30,7 +30,11 @@ const loginController = async (req, res) => {
     //set cookie
     setCookie(res, "authToken", token);
 
-    res.status(200).json({ message: "Login successful", success: true });
+    res.status(200).json({
+      message: "Login successful",
+      success: true,
+      data: { user: { _id: user._id } },
+    });
   } catch (error) {
     console.error("Error in loginController:", error);
     res.status(500).json({ message: "Internal Server Error", success: false });
