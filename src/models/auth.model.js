@@ -3,10 +3,10 @@ import { appDb } from "../configs/dbConnection.config.js";
 
 const authSchema = Schema(
   {
-    fullName: { type: String },
-    email: { type: String },
-    password: { type: String },
-    googleId: { type: String },
+    fullName: { type: String, default: null },
+    email: { type: String, default: null },
+    password: { type: String, default: null },
+    googleId: { type: String, default: null },
   },
   {
     timestamps: true,

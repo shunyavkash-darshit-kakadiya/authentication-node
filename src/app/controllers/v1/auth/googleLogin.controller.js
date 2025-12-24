@@ -5,7 +5,30 @@ import { setCookie } from "../../../../utils/setCookie.util.js";
 
 const googleLoginController = async (req, res) => {
   try {
-    console.log("Google Login Request Body");
+    const { name, email, googleId } = req.body;
+    let user = await Auth.findOne({ email });
+
+    if (!user) {
+      user = new Auth({
+        fullName: name,
+        email,
+        googleId,
+      });
+      await user.save();
+    }
+
+    //generate token
+    const token = generateToken(
+      {
+        id: user._id,
+      },
+      APP_JWT_SECRET
+    );
+
+    //set cookie
+    setCookie(res, "authToken", token);
+
+    res.status(200).json({ message: "Google Login successful", success: true });
   } catch (error) {
     console.error("Error in googleLoginController", error);
     res.status(500).json({ message: "Internal Server Error" });
