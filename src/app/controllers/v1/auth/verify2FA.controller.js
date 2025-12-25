@@ -22,6 +22,14 @@ const verify2FA = async (req, res) => {
     account.twoFactorEnabled = true;
     await account.save();
 
+    //generate auth token
+    const authToken = generateToken({ id: account._id }, APP_JWT_SECRET, "15d");
+
+    //set cookie
+    setCookie(res, "authToken", authToken, {
+      maxAge: 15 * 24 * 60 * 60 * 1000,
+    });
+
     return res
       .status(200)
       .json({ message: "2FA enabled successfully", success: true });
