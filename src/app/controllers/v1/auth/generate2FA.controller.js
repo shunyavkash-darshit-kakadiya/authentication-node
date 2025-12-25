@@ -28,7 +28,8 @@ const generate2FA = async (req, res) => {
     const { _id, email } = decoded;
 
     const secret = speakeasy.generateSecret({
-      length: 20,
+      name: `Auth System (${email})`,
+      issuer: "Auth System Panel",
     });
 
     await Auth.findByIdAndUpdate(_id, {
