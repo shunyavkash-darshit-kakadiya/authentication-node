@@ -1,5 +1,8 @@
 import speakeasy from "speakeasy";
 import Auth from "../../../../models/auth.model.js";
+import { generateToken } from "../../../../utils/token.util.js";
+import { APP_JWT_SECRET } from "../../../../configs/environment.config.js";
+import { setCookie } from "../../../../utils/setCookie.util.js";
 
 const verify2FA = async (req, res) => {
   try {
