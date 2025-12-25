@@ -23,7 +23,11 @@ const verify2FA = async (req, res) => {
     await account.save();
 
     //generate auth token
-    const authToken = generateToken({ id: account._id }, APP_JWT_SECRET, "15d");
+    const authToken = generateToken(
+      { _id: account._id, email: account.email },
+      APP_JWT_SECRET,
+      "15d"
+    );
 
     //set cookie
     setCookie(res, "authToken", authToken, {
