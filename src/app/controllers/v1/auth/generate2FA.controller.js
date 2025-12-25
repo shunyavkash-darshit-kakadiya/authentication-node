@@ -32,7 +32,7 @@ const generate2FA = async (req, res) => {
       name: `Auth System (${email})`,
     });
 
-    const otpauthUrl = `otpauth://totp/Auth%20System%20(${email})?secret=${secret.base32}`;
+    const otpauthUrl = `otpauth://totp/Auth%20System:%20(${email})?secret=${secret.base32}`;
 
     const qrCode = await qrcode.toDataURL(otpauthUrl);
 
