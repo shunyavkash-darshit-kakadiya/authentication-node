@@ -1,4 +1,5 @@
 import speakeasy from "speakeasy";
+import qrcode from "qrcode";
 import Auth from "../../../../models/auth.model.js";
 import { verifyToken } from "../../../../utils/token.util.js";
 import { APP_JWT_SECRET } from "../../../../configs/environment.config.js";
@@ -29,8 +30,11 @@ const generate2FA = async (req, res) => {
 
     const secret = speakeasy.generateSecret({
       name: `Auth System (${email})`,
-      issuer: "Auth System Panel",
     });
+
+    const otpauthUrl = `otpauth://totp/Auth%20System%20(${email})?secret=${secret.base32}`;
+
+    const qrCode = await qrcode.toDataURL(otpauthUrl);
 
     await Auth.findByIdAndUpdate(_id, {
       twoFactorSecret: secret.base32,
@@ -41,6 +45,7 @@ const generate2FA = async (req, res) => {
       message: "2FA secret generated",
       data: {
         secret: secret.base32,
+        qrCode,
       },
     });
   } catch (err) {
