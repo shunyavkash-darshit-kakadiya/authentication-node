@@ -35,7 +35,7 @@ const verifyLogin2FA = async (req, res) => {
     if (!isVerified) {
       return res.status(400).json({ message: "Invalid OTP", success: false });
     }
-    //generate admin token
+    //generate auth token
     const authToken = generateToken({ id: account._id }, APP_JWT_SECRET);
 
     //set cookie
