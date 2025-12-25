@@ -36,10 +36,10 @@ const verifyLogin2FA = async (req, res) => {
       return res.status(400).json({ message: "Invalid OTP", success: false });
     }
     //generate admin token
-    const adminToken = generateToken({ id: account._id }, APP_JWT_SECRET);
+    const authToken = generateToken({ id: account._id }, APP_JWT_SECRET);
 
     //set cookie
-    setCookie(res, "adminToken", adminToken, {
+    setCookie(res, "authToken", authToken, {
       maxAge: 15 * 24 * 60 * 60 * 1000,
     });
 
