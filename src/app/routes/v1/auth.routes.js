@@ -12,7 +12,7 @@ router.post("/register", registerController);
 router.post("/login", loginController);
 router.post("/google", googleLoginController);
 router.post("/logout", logoutController);
-router.post("/2fa/enable", generate2FA);
+router.post("/2fa/enable", AuthMiddleware, generate2FA);
 router.post("/2fa/verify", AuthMiddleware, verify2FA);
 
 export default router;
