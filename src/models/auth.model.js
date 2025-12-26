@@ -21,5 +21,5 @@ const authSchema = Schema(
   }
 );
 
-const Auth = appDb.model("auth", authSchema, "auth");
+const Auth = appDb.model("Auth", authSchema, "auth");
 export default Auth;
