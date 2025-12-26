@@ -25,6 +25,7 @@ const loginController = async (req, res) => {
         data: {
           require2FA: true,
           accountId: user._id,
+          twoFactorEnabled: user.twoFactorEnabled,
         },
       });
     }
