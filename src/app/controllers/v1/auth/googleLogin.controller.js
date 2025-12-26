@@ -41,6 +41,11 @@ const googleLoginController = async (req, res) => {
     //set cookie
     setCookie(res, "authToken", token);
 
+    //set cookie
+    setCookie(res, "authToken", token, {
+      maxAge: 3 * 24 * 60 * 60 * 1000,
+    });
+
     res.status(200).json({
       message: "Google Login successful",
       success: true,
