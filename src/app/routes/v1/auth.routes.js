@@ -5,6 +5,7 @@ import logoutController from "../../controllers/v1/auth/logout.controller.js";
 import generate2FA from "../../controllers/v1/auth/generate2FA.controller.js";
 import verify2FA from "../../controllers/v1/auth/verify2FA.controller.js";
 import getUserById from "../../controllers/v1/auth/getUserById.controller.js";
+import verifyLogin2FA from "../../controllers/v1/auth/verifyLogin2FA.js";
 import AuthMiddleware from "../../../middleware/auth.middleware.js";
 import { Router } from "express";
 
@@ -15,6 +16,7 @@ router.post("/google", googleLoginController);
 router.post("/logout", logoutController);
 router.post("/2fa/enable", AuthMiddleware, generate2FA);
 router.post("/2fa/verify", AuthMiddleware, verify2FA);
+router.post("/2fa/login/verify", verifyLogin2FA);
 router.get("/sync", AuthMiddleware, getUserById);
 
 export default router;
