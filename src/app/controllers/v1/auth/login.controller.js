@@ -18,6 +18,17 @@ const loginController = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
+    if (user.twoFactorEnabled) {
+      return res.status(200).json({
+        message: "2FA required",
+        success: true,
+        data: {
+          require2FA: true,
+          accountId: user._id,
+        },
+      });
+    }
+
     //generate token
     const token = generateToken(
       {
@@ -28,8 +39,8 @@ const loginController = async (req, res) => {
     );
 
     //set cookie
-    setCookie(res, 'authToken', token, {
-      maxAge: 3 * 24 * 60 * 60 * 1000
+    setCookie(res, "authToken", token, {
+      maxAge: 3 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
