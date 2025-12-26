@@ -17,6 +17,18 @@ const googleLoginController = async (req, res) => {
       await user.save();
     }
 
+    if (user.twoFactorEnabled) {
+      return res.status(200).json({
+        message: "2FA required",
+        success: true,
+        data: {
+          require2FA: true,
+          accountId: user._id,
+          twoFactorEnabled: user.twoFactorEnabled,
+        },
+      });
+    }
+
     //generate token
     const token = generateToken(
       {
