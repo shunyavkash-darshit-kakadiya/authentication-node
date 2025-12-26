@@ -3,10 +3,11 @@ import speakeasy from "speakeasy";
 import { generateToken } from "../../../../utils/token.util.js";
 import { setCookie } from "../../../../utils/setCookie.util.js";
 import { APP_JWT_SECRET } from "../../../../configs/environment.config.js";
+import { createActiveDevice } from "../../../../services/activeDevices/activeDevice.service.js";
 
 const verifyLogin2FA = async (req, res) => {
   try {
-    const { otp, accountId } = req.body;
+    const { otp, accountId, deviceInfo } = req.body;
 
     if (!otp || !accountId) {
       return res.status(400).json({
@@ -50,6 +51,14 @@ const verifyLogin2FA = async (req, res) => {
     setCookie(res, "authToken", authToken, {
       maxAge: 15 * 24 * 60 * 60 * 1000,
     });
+
+    // Save active session info for provide force logout for particular device
+    if (deviceInfo) {
+      await createActiveDevice({
+        AuthId: account._id,
+        ...deviceInfo,
+      });
+    }
 
     return res.status(200).json({
       success: true,
