@@ -1,6 +1,7 @@
 import { verifyToken } from "../utils/token.util.js";
 import { APP_JWT_SECRET } from "../configs/environment.config.js";
 import { getActiveDevice } from "../services/activeDevices/activeDevice.service.js";
+import Auth from "../models/auth.model.js";
 
 const cookieOptions = {
   httpOnly: true,
@@ -10,7 +11,7 @@ const cookieOptions = {
 
 const AuthMiddleware = async (req, res, next) => {
   try {
-    /* 1️⃣ Token */
+    /* Token */
     const token = req.cookies?.authToken;
     if (!token) {
       return res.status(401).json({
@@ -20,7 +21,7 @@ const AuthMiddleware = async (req, res, next) => {
       });
     }
 
-    /* 2️⃣ Verify JWT */
+    /* Verify JWT */
     let decoded;
     try {
       decoded = verifyToken(token, APP_JWT_SECRET);
@@ -33,23 +34,26 @@ const AuthMiddleware = async (req, res, next) => {
       });
     }
 
-    /* 3️⃣ STRICT device validation */
+    /* STRICT device validation */
     const visitorId = req.headers["x-visitor-id"];
 
     if (visitorId) {
       const activeDevice = await getActiveDevice(decoded._id, visitorId);
 
       if (!activeDevice) {
-        res.clearCookie("authToken", cookieOptions);
-        return res.status(401).json({
-          success: false,
-          message: "You have been logged out from another device",
-          data: { forceLogout: true },
-        });
+        const user = await Auth.findById(decoded._id);
+        if (user.twoFactorEnabled) {
+          res.clearCookie("authToken", cookieOptions);
+          return res.status(401).json({
+            success: false,
+            message: "You have been logged out from another device",
+            data: { forceLogout: true },
+          });
+        }
       }
     }
 
-    /* 4️⃣ Attach user */
+    /* Attach user */
     req.user = {
       _id: decoded._id,
       email: decoded.email,
