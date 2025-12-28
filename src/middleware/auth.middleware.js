@@ -39,7 +39,7 @@ const AuthMiddleware = async (req, res, next) => {
     if (visitorId) {
       const activeDevice = await getActiveDevice(decoded._id, visitorId);
 
-      if (!activeDevice || activeDevice.isActive === false) {
+      if (!activeDevice) {
         res.clearCookie("authToken", cookieOptions);
         return res.status(401).json({
           success: false,
