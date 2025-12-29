@@ -4,6 +4,7 @@ import { PORT } from "./configs/environment.config.js";
 import { appDb } from "./configs/dbConnection.config.js";
 import { cookieParser } from "./middleware/cookieParser.middleware.js";
 import appRouter from "./app/app.route.js";
+import corsMiddleware from './middleware/cors.middleware.js';
 
 const app = express();
 app.use(express.json());
@@ -14,24 +15,7 @@ app.use(express.json());
 // };
 // app.use(cors(corsOptions));
 
-const allowedOrigins = [
-  "http://localhost:4000",
-  "http://192.168.1.3:4000",  
-  "https://eff5b936af65.ngrok-free.app",
-];
-
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, origin);
-      }
-      return callback(new Error("CORS blocked"));
-    },
-    credentials: true,
-  })
-);
+app.use(corsMiddleware);
 
 app.use(cookieParser);
 
