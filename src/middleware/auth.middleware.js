@@ -5,13 +5,14 @@ import Auth from "../models/auth.model.js";
 
 const cookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  secure: process.env.NODE_ENV === "production",
 };
 
 const AuthMiddleware = async (req, res, next) => {
   try {
     const token = req.cookies?.authToken;
+    console.log("AuthMiddleware Token:", token);
     if (!token) {
       return res.status(401).json({
         success: false,
