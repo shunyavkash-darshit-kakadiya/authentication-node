@@ -39,9 +39,6 @@ const googleLoginController = async (req, res) => {
     );
 
     //set cookie
-    setCookie(res, "authToken", token);
-
-    //set cookie
     setCookie(res, "authToken", token, {
       maxAge: 3 * 24 * 60 * 60 * 1000,
     });
@@ -49,7 +46,11 @@ const googleLoginController = async (req, res) => {
     res.status(200).json({
       message: "Google Login successful",
       success: true,
-      data: { email: user.email, _id: user._id, twoFactorEnabled: user.twoFactorEnabled },
+      data: {
+        email: user.email,
+        _id: user._id,
+        twoFactorEnabled: user.twoFactorEnabled,
+      },
     });
   } catch (error) {
     console.error("Error in googleLoginController", error);
