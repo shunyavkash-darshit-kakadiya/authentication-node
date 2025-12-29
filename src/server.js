@@ -7,12 +7,13 @@ import { cookieParser } from "./middleware/cookieParser.middleware.js";
 
 const app = express();
 app.use(express.json());
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
+
+const corsOptions = {
+  origin: ["http://localhost:4000", "http://192.168.29.95:4000"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(cookieParser);
 
 //routes define
