@@ -11,7 +11,6 @@ const cookieOptions = {
 
 const AuthMiddleware = async (req, res, next) => {
   try {
-    /* Token */
     const token = req.cookies?.authToken;
     if (!token) {
       return res.status(401).json({
@@ -21,7 +20,6 @@ const AuthMiddleware = async (req, res, next) => {
       });
     }
 
-    /* Verify JWT */
     let decoded;
     try {
       decoded = verifyToken(token, APP_JWT_SECRET);
@@ -34,7 +32,6 @@ const AuthMiddleware = async (req, res, next) => {
       });
     }
 
-    /* STRICT device validation */
     const visitorId = req.headers["x-visitor-id"];
 
     if (visitorId) {
@@ -53,7 +50,6 @@ const AuthMiddleware = async (req, res, next) => {
       }
     }
 
-    /* Attach user */
     req.user = {
       _id: decoded._id,
       email: decoded.email,
