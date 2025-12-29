@@ -3,16 +3,11 @@ import { APP_JWT_SECRET } from "../configs/environment.config.js";
 import { getActiveDevice } from "../services/activeDevices/activeDevice.service.js";
 import Auth from "../models/auth.model.js";
 
-const cookieOptions = {
-  httpOnly: true,
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-  secure: process.env.NODE_ENV === "production",
-};
-
 const AuthMiddleware = async (req, res, next) => {
   try {
     const token = req.cookies?.authToken;
-    console.log("AuthMiddleware Token:", token);
+    console.log("AuthMiddleware Token===>", token);
+
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -25,7 +20,6 @@ const AuthMiddleware = async (req, res, next) => {
     try {
       decoded = verifyToken(token, APP_JWT_SECRET);
     } catch {
-      res.clearCookie("authToken", cookieOptions);
       return res.status(401).json({
         success: false,
         message: "Session expired",
@@ -41,7 +35,6 @@ const AuthMiddleware = async (req, res, next) => {
       if (!activeDevice) {
         const user = await Auth.findById(decoded._id);
         if (user.twoFactorEnabled) {
-          res.clearCookie("authToken", cookieOptions);
           return res.status(401).json({
             success: false,
             message: "You have been logged out from another device",
