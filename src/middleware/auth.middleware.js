@@ -6,7 +6,7 @@ import Auth from "../models/auth.model.js";
 const AuthMiddleware = async (req, res, next) => {
   try {
     const token = req.cookies?.authToken;
-    console.log("AuthMiddleware Token===>", token);
+    // console.log("AuthMiddleware Token===>", token);
 
     if (!token) {
       return res.status(401).json({
