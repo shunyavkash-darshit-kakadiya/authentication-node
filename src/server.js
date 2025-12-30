@@ -1,10 +1,9 @@
 import express from "express";
-import cors from "cors";
 import { PORT } from "./configs/environment.config.js";
 import { appDb } from "./configs/dbConnection.config.js";
 import { cookieParser } from "./middleware/cookieParser.middleware.js";
 import appRouter from "./app/app.route.js";
-import corsMiddleware from './middleware/cors.middleware.js';
+import corsMiddleware from "./middleware/cors.middleware.js";
 
 const app = express();
 app.use(express.json());
