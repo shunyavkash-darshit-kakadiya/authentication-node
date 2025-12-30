@@ -7,8 +7,7 @@ const corsMiddleware = cors({
 
     if (
       origin.startsWith("http://localhost") ||
-      origin.startsWith("http://192.168.") ||
-      origin.endsWith(".ngrok-free.app")
+      origin.startsWith("http://192.168.")
     ) {
       return callback(null, origin);
     }
