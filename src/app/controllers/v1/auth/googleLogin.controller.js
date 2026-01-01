@@ -48,7 +48,7 @@ const googleLoginController = async (req, res) => {
       success: true,
       data: {
         email: user.email,
-        _id: user._id,
+        accountId: user._id,
         twoFactorEnabled: user.twoFactorEnabled,
       },
     });

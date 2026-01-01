@@ -47,7 +47,11 @@ const loginController = async (req, res) => {
     res.status(200).json({
       message: "Login successful",
       success: true,
-      data: { user: { _id: user._id, email: user.email, twoFactorEnabled: user.twoFactorEnabled } },
+      data: {
+        accountId: user._id,
+        email: user.email,
+        twoFactorEnabled: user.twoFactorEnabled,
+      },
     });
   } catch (error) {
     console.error("Error in loginController:", error);
